@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+mask = '*.md'
+target_path = '.'
+
+puts "Looking for #{File.join(target_path, '**', mask)}"
+Dir.glob(File.join(target_path, '**', mask)) do |file|
+	puts "Processing #{file}..."
+	txt = File.read(file)
+	txt.gsub!(/^```(.+?)$/, '{% highlight \1 %}')
+	txt.gsub!(/^```$/, '{% endhighlight %}')
+	File.write(file, txt)
+end
